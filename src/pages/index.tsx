@@ -1,31 +1,40 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import { useEffect } from "react";
+import { useQuery, gql } from "@apollo/client";
 
-const inter = Inter({ subsets: ["latin"] });
+const GET_BOOKS = gql`
+  query {
+    books {
+      id
+      title
+      content
+      comments {
+        content
+      }
+    }
+  }
+`;
 
 export default function Home() {
-  useEffect(() => {
-    const init = async () => {
-      const URL = "http://localhost:4000/graphql";
-      const params = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(`{
-          getBooks{
-            title
-            content
-          }
-        }`),
-      };
-      const res = await fetch(URL, params).then((r) => r.json());
-      console.log(res);
-    };
-    init();
-  }, []);
+  const { loading, error, data } = useQuery(GET_BOOKS);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
   return (
     <div>
       <h2>GraphQL Clientの動作確認</h2>
+      <ul>
+        {data.books.map((book) => (
+          <>
+            <li key={book.id}>タイトル：{book.title}</li>
+            <li key={book.id}>内容：{book.content}</li>
+            {
+              book.comments.map((comment) => (
+                <li key={comment.id}>コメント{comment.content}</li>
+              ))
+            }
+          </>
+        ))}
+      </ul>
     </div>
   );
 }

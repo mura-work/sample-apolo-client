@@ -6,7 +6,8 @@
     "dev": "PORT=3001 next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gql-codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
@@ -16,15 +17,19 @@
     "apollo-client": "^2.6.10",
     "eslint-config-prettier": "^9.1.0",
     "framer-motion": "^11.1.7",
+    "graphql": "^16.8.1",
     "next": "14.2.3",
     "prettier": "^3.2.5",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@apollo/client": "^3.10.2",
     "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/client-preset": "^4.2.5",
     "@graphql-codegen/typescript": "^4.0.6",
     "@graphql-codegen/typescript-graphql-request": "^6.2.0",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
